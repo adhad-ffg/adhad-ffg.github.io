@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>adhad-ffg · Profile</title>
+    <title>adhad-ffg·Profile</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* ----- CSS Variables (Light/Dark) ----- */
@@ -774,6 +774,212 @@
             color: #f1c40f;
         }
 
+        /* ----- Discord Status Frame ----- */
+        .discord-card {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            background: var(--repo-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 20px 22px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            backdrop-filter: blur(4px);
+            transition: transform 0.25s, box-shadow 0.25s, background 0.3s, border-color 0.3s;
+        }
+
+        .discord-card:hover {
+            background: var(--repo-hover);
+            transform: translateY(-6px);
+            box-shadow: 0 18px 32px -12px rgba(0, 0, 0, 0.18);
+        }
+
+        .discord-avatar-wrap {
+            position: relative;
+            width: 84px;
+            height: 84px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #5865f2 0%, #764ba2 100%);
+            box-shadow: 0 0 0 3px rgba(88, 101, 242, 0.25), 0 10px 22px -8px rgba(88, 101, 242, 0.6);
+            transition: box-shadow 0.25s, transform 0.25s;
+        }
+
+        .discord-avatar-wrap:hover {
+            transform: scale(1.04);
+            box-shadow: 0 0 0 4px rgba(88, 101, 242, 0.4), 0 12px 26px -8px rgba(88, 101, 242, 0.7);
+        }
+
+        .discord-avatar-wrap img {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .discord-avatar-fallback {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: #ffffff;
+        }
+
+        .discord-details {
+            min-width: 0;
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .discord-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .discord-name {
+            font-size: clamp(1rem, 1.4vw, 1.15rem);
+            font-weight: 700;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .discord-status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            background: #80848e;
+            box-shadow: 0 0 0 3px rgba(128, 132, 142, 0.18);
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+
+        .discord-status-dot.online {
+            background: #23a55a;
+            box-shadow: 0 0 0 3px rgba(35, 165, 90, 0.2);
+            animation: pulse-dot 2.2s infinite;
+        }
+
+        .discord-status-dot.idle {
+            background: #f0b232;
+            box-shadow: 0 0 0 3px rgba(240, 178, 50, 0.2);
+        }
+
+        .discord-status-dot.dnd {
+            background: #f23f43;
+            box-shadow: 0 0 0 3px rgba(242, 63, 67, 0.2);
+        }
+
+        .discord-status-dot.offline {
+            background: #80848e;
+            box-shadow: 0 0 0 3px rgba(128, 132, 142, 0.18);
+        }
+
+        .discord-handle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .discord-activity {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 4px;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            word-break: break-word;
+        }
+
+        .discord-activity i {
+            color: #667eea;
+            flex-shrink: 0;
+        }
+
+        .discord-visit {
+            position: relative;
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            text-decoration: none;
+            font-size: 15px;
+            box-shadow: 0 4px 0 var(--btn-shadow), 0 6px 16px rgba(0, 0, 0, 0.08);
+            transition: all 0.15s ease;
+        }
+
+        .discord-visit:hover {
+            color: #ffffff;
+            background: #5865f2;
+            border-color: #5865f2;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #3b45c4, 0 10px 20px rgba(88, 101, 242, 0.35);
+        }
+
+        .discord-visit:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 #3b45c4, 0 4px 12px rgba(88, 101, 242, 0.2);
+        }
+
+        .discord-visit .tooltip-text {
+            visibility: hidden;
+            opacity: 0;
+            width: auto;
+            white-space: nowrap;
+            background: #1a1a2e;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 4px 10px;
+            font-size: 11px;
+            position: absolute;
+            bottom: 130%;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: opacity 0.25s ease;
+            pointer-events: none;
+            font-weight: 400;
+        }
+
+        .discord-visit .tooltip-text::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1a1a2e transparent transparent transparent;
+        }
+
+        .discord-visit:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
         /* Footer */
         .footer-section {
             position: relative;
@@ -941,6 +1147,12 @@
             .project-grid { grid-template-columns: 1fr 1fr; }
             .repo-card { flex-direction: column; align-items: flex-start; }
             .sns-dropdown-menu { min-width: 140px; }
+
+            /* Discord frame (small screens) */
+            .discord-card { flex-wrap: wrap; padding: 18px 16px; gap: 14px; }
+            .discord-avatar-wrap { width: 64px; height: 64px; }
+            .discord-avatar-fallback { font-size: 28px; }
+            .discord-visit { width: 34px; height: 34px; border-radius: 12px; font-size: 13px; }
         }
     </style>
 </head>
@@ -1085,6 +1297,29 @@
                         <i class="fas fa-star"></i>
                         <span id="starCount">--</span>
                     </div>
+                </div>
+            </section>
+
+            <!-- DISCORD STATUS (live via Lanyard) -->
+            <section class="section-card" id="discordSection">
+                <h3 class="section-title"><i class="fab fa-discord"></i> Discord Status</h3>
+                <div class="discord-card" id="discordCard">
+                    <a class="discord-avatar-wrap" href="https://discord.com/users/1544601141252333681" target="_blank" rel="noopener noreferrer" aria-label="Discord profile">
+                        <i class="fab fa-discord discord-avatar-fallback" id="discordAvatarFallback"></i>
+                        <img id="discordAvatar" src="https://lanyard.rest/api/1544601141252333681" alt="Discord Status" onerror="this.style.display='none';document.getElementById('discordAvatarFallback').style.display='flex';">
+                    </a>
+                    <div class="discord-details">
+                        <div class="discord-user">
+                            <span class="discord-status-dot offline" id="discordDot"></span>
+                            <span class="discord-name" id="discordName">adhad-ffg</span>
+                        </div>
+                        <div class="discord-handle" id="discordHandle">Connecting to Lanyard…</div>
+                        <div class="discord-activity" id="discordActivity"><i class="fas fa-circle-notch fa-spin"></i><span>Fetching live presence…</span></div>
+                    </div>
+                    <a class="discord-visit" href="https://discord.com/users/1544601141252333681" target="_blank" rel="noopener noreferrer" aria-label="Open Discord profile">
+                        <i class="fas fa-external-link-alt"></i>
+                        <span class="tooltip-text">Open Discord profile</span>
+                    </a>
                 </div>
             </section>
 
@@ -1317,8 +1552,99 @@
                 }
             }
 
+            // ----- DISCORD STATUS (Lanyard API) -----
+            const DISCORD_ID = '1544601141252333681';
+            const discordAvatar = document.getElementById('discordAvatar');
+            const discordAvatarFallback = document.getElementById('discordAvatarFallback');
+            const discordDot = document.getElementById('discordDot');
+            const discordName = document.getElementById('discordName');
+            const discordHandle = document.getElementById('discordHandle');
+            const discordActivity = document.getElementById('discordActivity');
+
+            const STATUS_TEXT = {
+                online: 'Online',
+                idle: 'Idle',
+                dnd: 'Do Not Disturb',
+                offline: 'Offline'
+            };
+            const ACTIVITY_VERB = {
+                0: 'Playing',
+                1: 'Streaming',
+                2: 'Listening to',
+                3: 'Watching',
+                5: 'Competing in'
+            };
+
+            function showDiscordAvatar(url) {
+                if (!url) return;
+                discordAvatar.src = url;
+                discordAvatar.style.display = 'block';
+                discordAvatarFallback.style.display = 'none';
+            }
+
+            function renderDiscord(data) {
+                const user = data.discord_user || {};
+                const status = data.discord_status || 'offline';
+                const statusLabel = STATUS_TEXT[status] || 'Offline';
+
+                discordDot.className = 'discord-status-dot ' + status;
+                discordDot.title = statusLabel;
+
+                discordName.textContent = user.global_name || user.username || 'adhad-ffg';
+                discordHandle.textContent = user.username
+                    ? '@' + user.username + ' · ' + statusLabel
+                    : statusLabel;
+
+                if (user.id && user.avatar) {
+                    const ext = user.avatar.indexOf('a_') === 0 ? 'gif' : 'png';
+                    showDiscordAvatar(
+                        'https://cdn.discordapp.com/avatars/' + user.id + '/' + user.avatar + '.' + ext + '?size=160'
+                    );
+                }
+
+                const activities = Array.isArray(data.activities) ? data.activities : [];
+                const custom = activities.find(a => a.type === 4);
+                const real = activities.find(a => a.type !== 4);
+
+                let icon = 'fas fa-circle-info';
+                let text = 'No activity right now';
+
+                if (data.listening_to_spotify && data.spotify) {
+                    icon = 'fab fa-spotify';
+                    text = 'Listening to ' + data.spotify.song + ' — ' + data.spotify.artist;
+                } else if (real) {
+                    icon = 'fas fa-gamepad';
+                    text = (ACTIVITY_VERB[real.type] || 'Playing') + ' ' + real.name;
+                } else if (custom && custom.state) {
+                    icon = 'fas fa-comment-dots';
+                    text = custom.state;
+                } else if (status === 'offline') {
+                    text = 'Currently offline';
+                }
+
+                discordActivity.innerHTML = '<i class="' + icon + '"></i><span></span>';
+                discordActivity.querySelector('span').textContent = text;
+            }
+
+            async function fetchDiscord() {
+                try {
+                    const res = await fetch('https://api.lanyard.rest/v1/users/' + DISCORD_ID);
+                    if (!res.ok) throw new Error('HTTP ' + res.status);
+                    const payload = await res.json();
+                    if (!payload || !payload.success || !payload.data) throw new Error('No presence data');
+                    renderDiscord(payload.data);
+                } catch (err) {
+                    console.warn('Discord presence error:', err);
+                    discordDot.className = 'discord-status-dot offline';
+                    discordHandle.textContent = '@adhad';
+                    discordActivity.innerHTML = '<i class="fas fa-circle-info"></i><span>Presence unavailable right now</span>';
+                }
+            }
+
             // ----- START FETCH, BUT LOADER STAYS FOR EXACTLY 5 SECONDS -----
             fetchAll();
+            fetchDiscord();
+            setInterval(fetchDiscord, 60000);
 
             // Hide loader after 5 seconds (always)
             setTimeout(() => {
